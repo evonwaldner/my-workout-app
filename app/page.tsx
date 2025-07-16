@@ -22,6 +22,20 @@ export default function Home() {
 
   const [user, setUser] = useState<any>(null)
 
+  // Helper function to get user's first name
+  const getUserFirstName = (user: any) => {
+    if (!user) return null
+    
+    // Try to get name from user metadata (Google OAuth)
+    const fullName = user.user_metadata?.full_name || user.user_metadata?.name
+    if (fullName) {
+      return fullName.split(' ')[0]
+    }
+    
+    // Fallback to email if no name is available
+    return user.email?.split('@')[0] || 'User'
+  }
+
   useEffect(() => {
     // Get current user
     const getUser = async () => {
@@ -64,7 +78,7 @@ export default function Home() {
           </Button>
         ) : (
           <>
-            <p>Welcome, {user.email}</p>
+            <p>Welcome, {getUserFirstName(user)}</p>
             <Button variant="outline" onClick={signOut} className="mb-4">
               Sign Out
             </Button>
@@ -121,6 +135,10 @@ export default function Home() {
               <span>Profile</span>
             </Button>
           </Link>
+        </div>
+
+        <div className="flex justify-center items-center pt-4">
+          <span className="text-xs text-muted-foreground/60">Created by Evan Von Waldner 2025</span>
         </div>
       </div>
 
