@@ -58,7 +58,7 @@ export default function Home() {
     const { error } = await supabase.auth.signInWithOAuth({ 
       provider: "google",
       options: {
-        redirectTo: `${window.location.origin}/auth/callback`
+        redirectTo: "https://my-workout-app-gb8g-evans-projects-69f266b1.vercel.app/auth/callback"
       }
     })
     if (error) alert("Error signing in: " + error.message)
